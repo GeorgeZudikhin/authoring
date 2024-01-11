@@ -28,5 +28,4 @@ public class AuthoringApplication implements CommandLineRunner {
 		final JdbcTemplate restTemplate = new JdbcTemplate(dataSource);
 		restTemplate.execute("select 1");
 	}
-
 }
