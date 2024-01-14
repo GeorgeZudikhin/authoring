@@ -50,4 +50,15 @@ public class AuthorDAOImplIntegrationTests {
                 .hasSize(3)
                 .containsExactly(authorA, authorB, authorC);
     }
+
+    @Test
+    public void testThatAuthorCanBeUpdated() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.createAuthor(authorA);
+        authorA.setName("UPDATED");
+        underTest.updateAuthor(authorA.getId(), authorA);
+        Optional<Author> result = underTest.findOneAuthor(authorA.getId());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(authorA);
+    }
 }

@@ -11,4 +11,6 @@ public interface AuthorDAO {
     Optional<Author> findOneAuthor(long authorId);
 
     List<Author> findManyAuthors();
+
+    void updateAuthor(long id, Author author);
 }
