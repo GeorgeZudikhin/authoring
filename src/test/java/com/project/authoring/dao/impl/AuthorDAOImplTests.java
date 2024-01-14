@@ -1,6 +1,7 @@
 package com.project.authoring.dao.impl;
 
 import com.project.authoring.DAO.impl.AuthorDAOImpl;
+import com.project.authoring.TestDataUtil;
 import com.project.authoring.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,11 +25,7 @@ public class AuthorDAOImplTests {
 
     @Test
     public void testThatCreateAuthorGeneratesCorrectSQL() {
-        Author author = Author.builder()
-                .id(1L)
-                .name("Abigail Rose")
-                .age(80)
-                .build();
+        Author author = TestDataUtil.createTestAuthor();
 
         underTest.create(author);
 
@@ -39,8 +36,8 @@ public class AuthorDAOImplTests {
     }
 
     @Test
-    public void testThatFindOneGeneratesTheCorrectSQL() {
-        underTest.findOne(1L);
+    public void testThatFindOneAuthorGeneratesTheCorrectSQL() {
+        underTest.findOneAuthor(1L);
         verify(jdbcTemplate).query(
                 eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"),
                 ArgumentMatchers.<AuthorDAOImpl.AuthorRowMapper>any(),

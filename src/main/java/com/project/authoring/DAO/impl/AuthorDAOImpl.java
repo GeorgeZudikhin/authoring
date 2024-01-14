@@ -4,12 +4,14 @@ import com.project.authoring.DAO.AuthorDAO;
 import com.project.authoring.domain.Author;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class AuthorDAOImpl implements AuthorDAO {
 
     private final JdbcTemplate jdbcTemplate;
@@ -27,10 +29,11 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
-    public Optional<Author> findOne(long authorId) {
+    public Optional<Author> findOneAuthor(long authorId) {
         List<Author> results = jdbcTemplate.query(
                 "SELECT id, name, age FROM authors WHERE id = ? LIMIT 1",
-                new AuthorRowMapper(), authorId
+                new AuthorRowMapper(),
+                authorId
         );
 
         return results.stream().findFirst();

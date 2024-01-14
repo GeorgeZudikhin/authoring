@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface AuthorDAO {
     void create(Author author);
 
-    Optional<Author> findOne(long authorId);
+    Optional<Author> findOneAuthor(long authorId);
 }
