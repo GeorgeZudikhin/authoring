@@ -25,9 +25,9 @@ public class BookDAOImplTests {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSQL() {
-        Book book = TestDataUtil.createTestBook();
+        Book book = TestDataUtil.createTestBookA();
 
-        underTest.create(book);
+        underTest.createBook(book);
 
         verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
@@ -44,6 +44,15 @@ public class BookDAOImplTests {
                 eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
                 ArgumentMatchers.<BookDAOImpl.BookRowMapper>any(),
                 eq("978-1-2345-6789-8")
+        );
+    }
+
+    @Test
+    public void testThatFindManyBooksGeneratesCorrectSQL() {
+        underTest.findManyBooks();
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn, title, author_id FROM books"),
+                ArgumentMatchers.<BookDAOImpl.BookRowMapper>any()
         );
     }
 }

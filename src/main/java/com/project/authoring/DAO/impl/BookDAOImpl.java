@@ -21,7 +21,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public void create(Book book) {
+    public void createBook(Book book) {
         jdbcTemplate.update(
                 "INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)",
                 book.getIsbn(),
@@ -38,6 +38,14 @@ public class BookDAOImpl implements BookDAO {
         );
 
         return results.stream().findFirst();
+    }
+
+    @Override
+    public List<Book> findManyBooks() {
+        return jdbcTemplate.query(
+                "SELECT isbn, title, author_id FROM books",
+                new BookRowMapper()
+        );
     }
 
     public static class BookRowMapper implements RowMapper<Book> {

@@ -21,7 +21,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
-    public void create(Author author) {
+    public void createAuthor(Author author) {
         jdbcTemplate.update(
                 "INSERT INTO authors (id, name, age) VALUES (?, ?, ?)",
                 author.getId(), author.getName(), author.getAge()
@@ -37,6 +37,14 @@ public class AuthorDAOImpl implements AuthorDAO {
         );
 
         return results.stream().findFirst();
+    }
+
+    @Override
+    public List<Author> findManyAuthors() {
+        return jdbcTemplate.query(
+                "SELECT id, name, age FROM authors",
+                new AuthorRowMapper()
+        );
     }
 
     public static class AuthorRowMapper implements RowMapper<Author> {
