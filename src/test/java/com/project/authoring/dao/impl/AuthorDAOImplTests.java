@@ -57,7 +57,7 @@ public class AuthorDAOImplTests {
     }
 
     @Test
-    public void testThatUpdateGeneratesCorrectSQL() {
+    public void testThatUpdateAuthorGeneratesCorrectSQL() {
         Author author = TestDataUtil.createTestAuthorA();
         underTest.updateAuthor(3L, author);
 
@@ -67,6 +67,15 @@ public class AuthorDAOImplTests {
                 eq("Abigail Rose"),
                 eq(80),
                 eq(3L)
+        );
+    }
+
+    @Test
+    public void testThatDeleteAuthorGeneratesCorrectSQL() {
+        underTest.deleteAuthor(1L);
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM authors WHERE id = ?"),
+                eq(1L)
         );
     }
 }
